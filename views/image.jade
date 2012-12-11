@@ -1,9 +1,19 @@
 extends layout
 
 block content
-    script(type='text/javascript', src="/public/javascripts/amp-client.js")
+    
+    script(type='text/javascript', src="http://code.jquery.com/jquery-latest.js")
+    script(type='text/javascript', src="/javascripts/amp-client.js")
 
-    img(src='/images/me.jpg')
+    #flick
+        #dot
+            img(src='/images/dot.jpg')
+        #pic
+            img.hide(src='/images/cat.jpg')
+        #china
+            img.hide(src='/images/cow.jpg')
+        #noise
+            img.hide(src='/images/noise.jpg')
 
     #left.button Q
 

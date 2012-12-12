@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "express": "3.0.3",
-    "jade": "*"
+    "express-expose": "0.3.3",
+    "jade": "0.27.7"
   }
 }

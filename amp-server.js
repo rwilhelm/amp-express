@@ -57,31 +57,17 @@ var walk = function(dir, done) {
 	});
 };
 
-var pickRandom = function (array) {
-	return array[Math.floor(Math.random()*array.length)].replace(/\public/, '');
-};
-
-var walkCharacters = function () {
-	walk('public/images/characters', function(err, results) {
-		if (err) throw err;
-		console.log(results);
-		return results;
-	});
-};
-
-walk('public/images/characters', function(err, results) { // 1
+walk('public/images/characters', function(err, results) { // callback #1
 	if (err) throw err;
 	var characters = results;
-	walk('public/images/pictures', function(err, results) { // 2
+	console.log(characters.length);
+	walk('public/images/pictures', function(err, results) { // callback #2
 		if (err) throw err;
 		var pictures = results;
-		app.get('/image', function(req, res){ // 1
+		app.get('/image', function(req, res){ // callback #3
 			res.expose(characters, 'characters');
 			res.expose(pictures, 'pictures');
-			res.render('image', {
-				character: pickRandom(characters),
-				picture: pickRandom(pictures)
-			});
+			res.render('image', { /* bla */ });
 		});
 		app.get('/', function(req, res){
 			res.render('index', { title: 'Express' });

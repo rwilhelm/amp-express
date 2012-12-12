@@ -5,15 +5,17 @@ block content
     script(type='text/javascript', src="http://code.jquery.com/jquery-latest.js")
     script(type='text/javascript', src="/javascripts/amp-client.js")
 
+    script!= javascript
+
     #flick
         #dot
-            img(src='/images/dot.jpg')
-        #pic
-            img.hide(src='/images/cat.jpg')
-        #china
-            img.hide(src='/images/cow.jpg')
+          img.hide(src='/images/dot.jpg')
+        #picture
+          img.hide(src="#{picture}")
+        #character
+          img.hide(src="#{character}")
         #noise
-            img.hide(src='/images/noise.jpg')
+          img.hide(src='/images/noise.jpg')
 
     #left.button Q
 

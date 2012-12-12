@@ -50,28 +50,16 @@ p {
 
 #flick img {
 	position: relative;
-	top: 0;
+	vertical-align: middle;
+	top: 100;
 	left: 0;
 }
 
 img {
-	vertical-align: middle;
 	max-width: 500px;
 	max-height: 500px;
 }
 
 .hide {
 	display: none;
-}
-
-.prime { /* random picture */
-}
-
-.chinese { /* some chinese sign */
-}
-
-.dot { /* do it with canvas */
-}
-
-.noise { /* canvas, too? */
 }

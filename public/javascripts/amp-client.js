@@ -22,28 +22,19 @@ var showImage = function(id, duration) {
 	return delayAfter($(id).toggleClass("hide"), delay);
 };
 
-var flick = function (div, timeout, callback) {
+var flick = function (div, timeout, callback) { // FIXME callbacks!
 	setTimeout(function() { $('#flick ' + div + ' img').toggleClass("hide"); }, timeout+500);
 	setTimeout(function() { $('#flick ' + div + ' img').toggleClass("hide"); }, timeout);
 	return;
 };
 
-// Usage: randomFile(letters);
-//     or randomFile(pictures);
-
 var pickRandom = function (array) {
-	return array[Math.floor(Math.random()*array.length)];
+	return array[Math.floor(Math.random()*array.length)].replace(/\public/, '');
 };
 
 var flickTrail = function () {
-	//$('#picture img').attr('src', pickRandom(pictures));
-	//$('#character img').attr('src', pickRandom(characters));
-	console.log("TYPE: " + window.pictures.constructor == Hash); // FIXME why is this no array?
-	console.log(window.pictures[0]);
-	console.log(window.pictures.length);
-	console.log("KEYS: " + window.pictures.class);
-	console.log(Math.floor(Math.random()*(window.pictures.keys(hash_table).length)));
-	console.log(pickRandom(characters));
+	$('#picture img').attr('src', pickRandom(pictures));
+	$('#character img').attr('src', pickRandom(characters));
 
 	flick("#dot", 500);
 	flick("#picture", 1000);
@@ -59,11 +50,13 @@ $(function() {
 				//console.log("Yay, like! :) Keycode: " + e.which);
 				$('#right.button').toggleClass("active");
 				setTimeout(function() { $('#right.button').toggleClass("active"); }, 300);
+				flickTrail();
 				break;
 			case 113: // lowercase q
 				//console.log("Ugh, dislike. :/ Keycode: " + e.which);
 				$('#left.button').toggleClass("active");
 				setTimeout(function() { $('#left.button').toggleClass("active"); }, 300);
+				flickTrail();
 				break;
 			case 114: // lowercase r
 				flickTrail();

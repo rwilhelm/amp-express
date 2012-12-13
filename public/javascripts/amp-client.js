@@ -7,8 +7,9 @@
  * vi: set ts=2 sw=2 sts=2
  */
 
-var  characters  =  []
-,    pictures    =  []
+var  characters         =  []
+,    pictures           =  []
+,    flickTrailRunning  =  false;
 
 var socket = io.connect('http://localhost');
 socket.on('arrays', function (data) {
@@ -25,6 +26,7 @@ var pickRandom = function(array) {
  */
 
 var flickTrail = function() { // setTimeout(callback, delay, [arg], [...])
+	flickTrailRunning = true;
 	$('#flick img#noise').addClass("hide"); // noise off
 	$('#flick img#dot').removeClass("hide"); // dot on
 	setTimeout(function() {
@@ -38,37 +40,29 @@ var flickTrail = function() { // setTimeout(callback, delay, [arg], [...])
 			setTimeout(function() {
 				$('#flick img#character ').addClass("hide"); // character off
 				$('#flick img#noise ').removeClass("hide"); // noise on
+				flickTrailRunning = false;
 			},300); // character
 		},300); // picture
 	},300); // dot
 };
 
-//var code = e.keyCode || e.which;
-
-$(window).keypress(function(e) { // FIXME block on running flickTrail
-	console.log(e.which);
+$(window).keypress(function(e) {
 	switch(e.which) {
 		case 112: // lowercase p
-			//console.log("Yay, like! :) Keycode: " + e.which);
-			$('#right.button').toggleClass("active");
-			setTimeout(function() { $('#right.button').toggleClass("active"); }, 300);
+			if (flickTrailRunning) break;
 			flickTrail();
 			break;
 		case 113: // lowercase q
-			//console.log("Ugh, dislike. :/ Keycode: " + e.which);
-			$('#left.button').toggleClass("active");
-			setTimeout(function() { $('#left.button').toggleClass("active"); }, 300);
+			if (flickTrailRunning) break;
 			flickTrail();
 			break;
 		case 114: // lowercase r
+			if (flickTrailRunning) break;
 			flickTrail();
 			break;
 		case 104: // lowercase h
 			$('#left.button').toggleClass("hide");
 			$('#right.button').toggleClass("hide");
-		case 63: // question mark
-			// print help
-		case 82: // uppercase r
-			// restart procedure
+			break;
 	}
 });

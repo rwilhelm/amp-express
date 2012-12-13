@@ -30,9 +30,9 @@ Sloc
 
 ```sloc *~node_modules```
 
->    Language  Files  Code  Comment  Blank  Total
->       Total      4   154       60     33    247
->  JavaScript      2    88       53     14    155
->         CSS      1    48        7     11     66
->    Markdown      1    18        0      8     26
+      Language  Files  Code  Comment  Blank  Total
+         Total      4   154       60     33    247
+    JavaScript      2    88       53     14    155
+           CSS      1    48        7     11     66
+      Markdown      1    18        0      8     26
 

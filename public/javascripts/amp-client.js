@@ -43,7 +43,10 @@ var flickTrail = function() { // setTimeout(callback, delay, [arg], [...])
 	},300); // dot
 };
 
-$(window).keypress(function(e) { // FIXME
+//var code = e.keyCode || e.which;
+
+$(window).keypress(function(e) { // FIXME block on running flickTrail
+	console.log(e.which);
 	switch(e.which) {
 		case 112: // lowercase p
 			//console.log("Yay, like! :) Keycode: " + e.which);
@@ -60,5 +63,12 @@ $(window).keypress(function(e) { // FIXME
 		case 114: // lowercase r
 			flickTrail();
 			break;
+		case 104: // lowercase h
+			$('#left.button').toggleClass("hide");
+			$('#right.button').toggleClass("hide");
+		case 63: // question mark
+			// print help
+		case 82: // uppercase r
+			// restart procedure
 	}
 });

@@ -1,80 +1,81 @@
-//vi:set ts=2 sw=2 sts=2
-
 /*
-	 EVERYTHING'S HAPPENING AT ONCE!
-	 CALLBACKS, EVENT EMITTERS, CLOSURES! OMG. oO
-*/
+ * amp-server.js
+ *
+ * © 2012 René Wilhelm <rene.wilhelm@gmail.com>
+ * https://www.github.com/rwilhelm/amp-express
+ *
+ * vi: set ts=2 sw=2 sts=2
+ */
 
+// Primary Dependencies
 var  express  =  require('express')
-,    expose   =  require('express-expose')
-,    http     =  require('http')
-,    path     =  require('path')
-,    events   =  require('events')
-,    fs       =  require('fs');
+,    app      =  express()
+,    server   =  require('http').createServer(app)
+,    io       =  require('socket.io').listen(server);
 
-var app = express();
+// Secondary Dependencies
+var  fs    =  require('fs')
+,    path  =  require('path');
 
 app.configure(function(){
-	app.set('port', process.env.PORT || 3000);
+	//app.set('port', process.env.PORT || 3000);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
 	app.use(express.favicon());
 	app.use(express.logger('dev'));
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
-	app.use(app.router);
-	app.use(express.static(path.join(__dirname, 'public')));
-});
-
-app.configure('development', function(){
-	app.use(express.errorHandler());
+	//app.use(app.router); // We don't need no router!
+	app.use(express.static(__dirname + '/public'));
 });
 
 /*
-	 http://stackoverflow.com/a/5827895/220472
-*/
+ * Traverse a directory and return an array of files.
+ * http://stackoverflow.com/a/5827895/220472
+ */
 
 var walk = function(dir, done) {
-	var results = [];
+	var res = [];
 	fs.readdir(dir, function(err, list) {
 		if (err) return done(err);
 		var pending = list.length;
-		if (!pending) return done(null, results);
+		if (!pending) return done(null, res);
 		list.forEach(function(file) {
 			file = dir + '/' + file;
 			fs.stat(file, function(err, stat) {
 				if (stat && stat.isDirectory()) {
 					walk(file, function(err, res) {
-						results = results.concat(res);
-						if (!--pending) done(null, results);
+						res = res.concat(res);
+						if (!--pending) done(null, res);
 					});
 				} else {
-					results.push(file);
-					if (!--pending) done(null, results);
+					res.push(file);
+					if (!--pending) done(null, res);
 				}
 			});
 		});
 	});
 };
 
-walk('public/images/characters', function(err, results) { // callback #1
+walk('public/images/characters', function(err, res) { // 1
 	if (err) throw err;
-	var characters = results;
-	console.log(characters.length);
-	walk('public/images/pictures', function(err, results) { // callback #2
+	var characters = res;
+	walk('public/images/pictures', function(err, res) { // 2
 		if (err) throw err;
-		var pictures = results;
-		app.get('/image', function(req, res){ // callback #3
-			res.expose(characters, 'characters');
-			res.expose(pictures, 'pictures');
+		var pictures = res;
+		io.sockets.on('connection', function (socket) {
+			socket.emit('arrays', {
+				characters: characters,
+				pictures: pictures
+			});
+		});
+		app.get('/image', function(req, res){ // 3
 			res.render('image', { /* bla */ });
 		});
 		app.get('/', function(req, res){
-			res.render('index', { title: 'Express' });
+			res.render('index', { /* blub */ });
 		});
 	});
 });
 
-http.createServer(app).listen(app.get('port'), function(){
-	console.log("Express server listening on port " + app.get('port'));
-});
+server.listen(3000);

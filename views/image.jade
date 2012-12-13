@@ -2,17 +2,16 @@ extends layout
 
 block content
     
-    script(type='text/javascript', src="http://code.jquery.com/jquery-latest.js")
-    script(type='text/javascript', src="/javascripts/amp-client.js")
+  script(src="http://code.jquery.com/jquery-latest.js")
+  script(src="/socket.io/socket.io.js")
+  script(src="/javascripts/amp-client.js")
 
-    script!= javascript
+  #flick
+    img#noise(src='/images/noise.jpg')
+    img#dot.hide(src='/images/dot.jpg')
+    img#picture.hide(src="")
+    img#character.hide(src="")
 
-    #flick
-        img#noise.hide(src='/images/noise.jpg')
-        img#dot.hide(src='/images/dot.jpg')
-        img#picture.hide(src="")
-        img#character.hide(src="")
+  #left.button Q
 
-    #left.button Q
-
-    #right.button P
+  #right.button P

@@ -1,6 +1,17 @@
+/*
+ * style.css
+ *
+ * © 2012 René Wilhelm <rene.wilhelm@gmail.com>
+ * https://www.github.com/rwilhelm/amp-express
+ *
+ * vi: set ts=2 sw=2 sts=2
+ */
+
 body {
-	padding: 50px 20%;
+	padding-top: 100px;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	width: 500px;
+	margin: 0 auto;
 }
 
 a {
@@ -38,26 +49,16 @@ p {
 	float: right;
 }
 
-#flick { /* FIXME get a better name */
-	position: relative;
-	text-align: center;
-	left: 0;
-	top: 0;
+#flick {
 	height: 500px;
-	width: 100%;
-	border: 1px solid #222;
+	width: 500px;
+    display: table-cell;
+	vertical-align: middle;
+	text-align: center;
 }
 
 #flick img {
-	position: relative;
 	vertical-align: middle;
-	top: 100;
-	left: 0;
-}
-
-img {
-	max-width: 500px;
-	max-height: 500px;
 }
 
 .hide {
